@@ -1,0 +1,25 @@
+{
+  "name": "nodejs-app",
+  "version": "1.0.0",
+  "main": "index.html",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "jade": "^1.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alex-zayats/alex-zayats.github.io.git"
+  },
+  "author": "Aliaksandr Zayats",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alex-zayats/alex-zayats.github.io/issues"
+  },
+  "homepage": "https://github.com/alex-zayats/alex-zayats.github.io#readme",
+  "description": ""
+}
