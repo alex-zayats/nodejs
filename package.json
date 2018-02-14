@@ -5,11 +5,12 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "jade": "^1.11.0"
+    "jade": "^1.11.0",
+    "mongoose": "^5.0.3"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node ./server.js"
+    "start": "node ./app/server.js"
   },
   "repository": {
     "type": "git",
