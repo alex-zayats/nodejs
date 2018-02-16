@@ -1,4 +1,4 @@
-var express = require('express'),
+const express = require('express'),
 	app = express(),
 	bodyParser = require('body-parser'),
 	jade = require('jade'),
@@ -16,53 +16,49 @@ function errorHandler(err) {
 	return false;
 }
 
-app.get('/blogs', function (req, res) {
-	var articles = mongo.ArticleModel.find({}, null, { limit: 20 }, function (err, articles) {
-		if (err) return errorHandler(err);
-		res.render('index', { articles: articles });
-	});
-});
+app.get('/blogs', (req, res) => {
+	mongo.ArticleModel.find({}, null, { limit: 20 })
+		.then(articles => res.render('index', { articles }))
+		.catch(err => errorHandler(err));
+	}
+);
 
-app.get('/blogs/:id', function (req, res) {
-	mongo.ArticleModel.findById({ '_id': req.params.id }, function (err, result) {
-		errorHandler(err);
-		res.send(result);
-	});
-});
+app.get('/blogs/:id', (req, res) => {
+	mongo.ArticleModel.findById({ '_id': req.params.id })
+		.then(result => res.send(result))
+		.catch(err => errorHandler(err));
+	}
+);
 
-app.post('/blogs', function (req, res) {
-	var article = new mongo.ArticleModel({
-		title: req.body.title,
-		content: req.body.content,
-		source: req.body.source,
-		author: req.body.author
-	});
-	article.save(function (err) {
-		if (err) return errorHandler(err);
-		res.send('Article saved sucessfully');
-	});
-});
+app.post('/blogs', (req, res) => {
+	const { title, content, source, author } = req.body;
+	const article = new mongo.ArticleModel({ title, content, source, author });
+	article.save()
+		.then(result => res.send('Article added sucessfully'))
+		.catch(err => errorHandler(err));
+	}
+);
 
-app.put('/blogs/:id', function (req, res) {
-	mongo.ArticleModel.update({ '_id': req.params.id }, { $set: req.body}, function (err) {
-		if (err) return errorHandler(err);
-		res.send('Article updated sucessfully');
-	});
-});
+app.put('/blogs/:id', (req, res) => {
+	mongo.ArticleModel.update({ '_id': req.params.id }, { $set: req.body})
+		.then(result => res.send('Article updated sucessfully'))
+		.catch(err => errorHandler(err));
+	}
+);
 
-app.delete('/blogs/:id', function (req, res) {
-	mongo.ArticleModel.remove({ '_id': req.params.id }, function (err) {
-		if (err) return errorHandler(err);
-		res.send('Article deleted sucessfully');
-	});
-});
+app.delete('/blogs/:id', (req, res) => {
+	mongo.ArticleModel.remove({ '_id': req.params.id })
+		.then(result => res.send('Article deleted sucessfully'))
+		.catch(err => errorHandler(err));
+	}
+);
 
 app.all('*', function(req, res) {
 	res.status(404).type('txt').send('Sorry, page not found');
 });
 
-var server = app.listen(8080, '127.0.0.1', function () {
-  var host = server.address().address;
-  var port = server.address().port;
+const server = app.listen(8080, '127.0.0.1', function () {
+  const host = server.address().address;
+  const port = server.address().port;
   console.log("App listening at %s:%s", host, port);
 });
